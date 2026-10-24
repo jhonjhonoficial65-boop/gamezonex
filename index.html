@@ -1,0 +1,977 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090b13">
+<meta name="description" content="GAMEZONE: ferramentas gamer, biblioteca de jogos, missões, quizzes, gerador de nick e calculadoras gratuitas.">
+<title>GAMEZONE — Seu portal gamer</title>
+
+<!--
+ADSENSE:
+Depois da aprovação, coloque aqui o código oficial fornecido pelo Google.
+Não invente nem copie IDs de anúncios de outras pessoas.
+-->
+
+<style>
+:root{
+  --bg:#090b13;
+  --panel:#121725;
+  --panel2:#192136;
+  --border:#2a3650;
+  --text:#f3f5ff;
+  --muted:#aab5cc;
+  --green:#9aff70;
+  --purple:#b69aff;
+  --red:#ff8787;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,Arial,sans-serif;
+}
+button,input,select,textarea{font:inherit}
+button,a{touch-action:manipulation}
+a{color:var(--green)}
+button{
+  background:var(--green);color:#10170b;border:0;
+  padding:11px 14px;border-radius:9px;font-weight:800;
+  cursor:pointer;transition:.15s;
+}
+button:hover{filter:brightness(1.1)}
+button:active{transform:scale(.98)}
+button:focus-visible,a:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--green);outline-offset:3px;
+}
+.secondary{background:#2a3550;color:white}
+.purple{background:var(--purple);color:#171027}
+.danger{background:#52252e;color:#fff}
+header{
+  background:#0d111d;border-bottom:1px solid var(--border);
+  padding:15px 5%;display:flex;align-items:center;
+  justify-content:space-between;gap:14px;flex-wrap:wrap;
+  position:sticky;top:0;z-index:10;
+}
+.logo{font-size:24px;font-weight:1000;letter-spacing:1px}
+.logo span{color:var(--green)}
+header small{color:var(--muted)}
+nav{
+  display:flex;gap:8px;flex-wrap:wrap;padding:12px 5%;
+  background:#0d111d;border-bottom:1px solid var(--border);
+}
+nav a{
+  text-decoration:none;color:#dce4fa;font-size:13px;
+  padding:8px 11px;border:1px solid var(--border);
+  border-radius:8px;
+}
+nav a:hover{color:var(--green);border-color:var(--green)}
+.wrap{width:min(1120px,92%);margin:auto}
+.hero{
+  padding:52px 5%;
+  background:radial-gradient(ellipse at 85% 15%,#3d286d 0,transparent 38%),
+  radial-gradient(ellipse at 10% 80%,#153d3a 0,transparent 35%),
+  #101525;
+}
+.tag{color:var(--green);font-size:12px;font-weight:900;letter-spacing:3px}
+.hero h1{font-size:clamp(36px,7vw,70px);line-height:1;
+  letter-spacing:-2px;margin:17px 0}
+.hero h1 span{color:var(--green)}
+.hero p{max-width:650px;color:#c3cce0;line-height:1.7}
+.hero-stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{background:#222c43;border:1px solid #394765;
+  padding:8px 12px;border-radius:99px;font-size:13px}
+.section-title{margin:36px 0 16px;font-size:23px}
+.section-desc{color:var(--muted);margin-top:-8px;line-height:1.6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:15px}
+.card{
+  background:linear-gradient(145deg,var(--panel),#101522);
+  border:1px solid var(--border);border-radius:15px;
+  padding:20px;min-width:0;
+}
+.card h3{margin:8px 0;font-size:19px}
+.card p{color:var(--muted);font-size:14px;line-height:1.6}
+.card .icon{font-size:29px}
+label{display:block;font-size:13px;color:#c3cce0;margin-top:10px}
+input,select,textarea{
+  width:100%;background:#090e19;color:white;
+  border:1px solid #394763;border-radius:9px;
+  padding:12px;margin:6px 0 10px;
+}
+input[type=checkbox]{width:auto;margin-right:7px}
+textarea{min-height:100px;resize:vertical}
+.row{display:flex;gap:9px;align-items:center}
+.row>*{min-width:0;flex:1}
+.result{
+  background:#090e19;border:1px solid #2a3650;
+  border-radius:10px;padding:13px;margin-top:12px;
+  overflow-wrap:anywhere;line-height:1.6;
+}
+.big{font-size:25px;font-weight:900;color:var(--green)}
+.muted{color:var(--muted);font-size:12px;line-height:1.6}
+.ad{
+  margin:23px 0;padding:22px;border:1px dashed #43516b;
+  border-radius:11px;text-align:center;color:#8794ad;font-size:12px;
+}
+.progress{height:9px;background:#293249;border-radius:20px;overflow:hidden;margin:12px 0}
+.progress span{display:block;height:100%;width:0;background:var(--green);transition:width .2s}
+.game-list{display:grid;gap:9px}
+.game-item{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;background:#0c111e;border:1px solid var(--border);
+  padding:12px;border-radius:10px;
+}
+.game-item strong{display:block}
+.game-item small{color:var(--muted)}
+.game-item button{flex-shrink:0}
+.badges{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}
+.badge{background:#26324a;border:1px solid #3a4965;padding:6px 9px;border-radius:8px;font-size:12px}
+.badge.unlocked{color:var(--green);border-color:#507b43}
+.page{display:none;padding:25px 0 60px}
+.page.active{display:block}
+.page h1{font-size:clamp(28px,5vw,42px)}
+.page h2{margin-top:28px}
+.page p,.page li{color:#c2cce0;line-height:1.8}
+.page .legal{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:22px}
+footer{border-top:1px solid var(--border);margin-top:40px;padding:27px 4%;color:var(--muted);font-size:13px;line-height:1.8}
+footer a{margin-right:13px}
+#notice{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);
+  background:#26334b;color:white;padding:12px 18px;border-radius:10px;
+  z-index:40;display:none;max-width:92%;text-align:center}
+.modal-backdrop{
+  position:fixed;inset:0;background:#000c;z-index:30;
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.modal-backdrop.show{display:flex}
+.modal{
+  width:min(560px,100%);max-height:90vh;overflow:auto;
+  background:#131a2a;border:1px solid #394761;border-radius:16px;padding:23px;
+}
+.modal h2{margin-top:0}
+.modal p,.modal li{color:#c2cce0;line-height:1.65;font-size:14px}
+.modal-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.modal-actions button{flex:1}
+.checkline{display:flex;align-items:flex-start;gap:8px;color:#e1e6f3;font-size:13px;line-height:1.6}
+.checkline input{width:auto;margin-top:5px}
+.empty{color:var(--muted);font-size:13px}
+@media(max-width:600px){
+ header{position:static}
+ .hero{padding:38px 5%}
+ .grid{grid-template-columns:1fr}
+ .row.mobile-stack{flex-direction:column;align-items:stretch}
+ .card{padding:17px}
+ nav{gap:6px}
+ nav a{padding:7px 9px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#inicio" class="logo" style="text-decoration:none;color:inherit">
+    GAME<span>ZONE</span> ⚡
+  </a>
+  <small>PORTAL GAMER • GRÁTIS</small>
+</header>
+
+<nav aria-label="Navegação principal">
+  <a href="#ferramentas">Ferramentas</a>
+  <a href="#biblioteca">Minha biblioteca</a>
+  <a href="#missoes">Missões</a>
+  <a href="#quiz">Quiz</a>
+  <a href="#perfil">Meu perfil</a>
+</nav>
+
+<main id="inicio">
+<section class="hero">
+  <div class="tag">PLAYER HUB // GAME ON</div>
+  <h1>SUBA DE NÍVEL.<br>JOGUE DO <span>SEU JEITO.</span></h1>
+  <p>
+    Um lugar para descobrir jogos, organizar sua biblioteca,
+    criar nicks, calcular configurações e cumprir desafios.
+    Tudo em um único portal.
+  </p>
+  <a href="#ferramentas"><button>EXPLORAR O PORTAL →</button></a>
+  <div class="hero-stats">
+    <span class="pill">🎮 Ferramentas grátis</span>
+    <span class="pill">🏆 XP e conquistas</span>
+    <span class="pill">💾 Progresso local</span>
+  </div>
+</section>
+
+<div class="wrap">
+
+<div class="ad">
+  Espaço reservado para publicidade.
+  Anúncios reais exigem configuração e aprovação do provedor.
+</div>
+
+<section id="perfil">
+<h2 class="section-title">👤 Seu perfil gamer</h2>
+<div class="card">
+  <div class="row mobile-stack">
+    <div>
+      <label for="playerName">Seu nick no portal</label>
+      <input id="playerName" maxlength="24" placeholder="Digite seu nick">
+    </div>
+    <div>
+      <label for="favoriteGenre">Gênero favorito</label>
+      <select id="favoriteGenre">
+        <option>Todos os gêneros</option>
+        <option>FPS</option>
+        <option>Terror</option>
+        <option>Aventura</option>
+        <option>Sandbox</option>
+        <option>Obby</option>
+        <option>RPG</option>
+        <option>Corrida</option>
+      </select>
+    </div>
+  </div>
+  <button onclick="saveProfile()">SALVAR PERFIL</button>
+  <div class="result">
+    <div class="big" id="profileDisplay">Player</div>
+    <div id="levelDisplay">Nível 1 • 0 XP</div>
+    <div class="progress"><span id="xpBar"></span></div>
+    <div class="muted" id="xpInfo">100 XP para o próximo nível.</div>
+    <div class="badges" id="badgeDisplay"></div>
+  </div>
+  <p class="muted">O XP é apenas uma pontuação de diversão neste site. Não oferece prêmios nem dinheiro.</p>
+</div>
+</section>
+
+<section id="ferramentas">
+<h2 class="section-title">🛠️ Ferramentas para jogadores</h2>
+<p class="section-desc">Recursos rápidos para usar enquanto planeja sua próxima partida.</p>
+<div class="grid">
+
+<article class="card">
+<div class="icon">🎭</div>
+<h3>Gerador de nick</h3>
+<p>Crie um nome para Roblox, Minecraft, FPS ou qualquer outro jogo.</p>
+<label for="nickStyle">Estilo</label>
+<select id="nickStyle">
+<option value="pro">Pro player</option>
+<option value="dark">Dark</option>
+<option value="fun">Engraçado</option>
+<option value="space">Espacial</option>
+<option value="simple">Minimalista</option>
+</select>
+<button onclick="generateNick()">GERAR NICK</button>
+<div class="result" id="nickResult">Seu próximo nick aparecerá aqui.</div>
+<button class="secondary" onclick="copyText('nickResult')">COPIAR</button>
+</article>
+
+<article class="card">
+<div class="icon">🎯</div>
+<h3>Conversor de sensibilidade</h3>
+<p>Calcule uma sensibilidade equivalente aproximada ao trocar o DPI do mouse.</p>
+<label for="dpiA">DPI atual</label><input id="dpiA" type="number" min="1" value="800">
+<label for="sensA">Sensibilidade atual</label><input id="sensA" type="number" min="0.001" step="any" value="1">
+<label for="dpiB">Novo DPI</label><input id="dpiB" type="number" min="1" value="1600">
+<button onclick="convertSens()">CALCULAR</button>
+<div class="result" id="sensResult">Preencha os valores.</div>
+<p class="muted">O resultado matemático não garante a mesma sensação entre jogos diferentes.</p>
+</article>
+
+<article class="card">
+<div class="icon">🎲</div>
+<h3>Descubra o que jogar</h3>
+<p>Está sem ideia? Sorteie uma sugestão conforme seu estilo.</p>
+<label for="gameGenre">Categoria</label>
+<select id="gameGenre">
+<option value="any">Qualquer estilo</option>
+<option value="roblox">Experiência no Roblox</option>
+<option value="horror">Terror</option>
+<option value="building">Construção e sandbox</option>
+<option value="competitive">Competitivo</option>
+<option value="relax">Relaxante</option>
+</select>
+<button onclick="pickGame()">ESCOLHER JOGO</button>
+<div class="result" id="gameResult">Sua próxima aventura começa aqui.</div>
+</article>
+
+<article class="card">
+<div class="icon">🧮</div>
+<h3>Calculadora de desconto</h3>
+<p>Descubra quanto custa um jogo depois do desconto.</p>
+<label for="price">Preço original (R$)</label><input id="price" type="number" min="0" step="any" placeholder="199.90">
+<label for="discount">Desconto (%)</label><input id="discount" type="number" min="0" max="100" value="20">
+<button onclick="calcDiscount()">CALCULAR PREÇO</button>
+<div class="result" id="discountResult">O preço final aparecerá aqui.</div>
+</article>
+
+<article class="card">
+<div class="icon">🖥️</div>
+<h3>Registro de FPS</h3>
+<p>Guarde uma medição de FPS feita por você. Não é um medidor automático.</p>
+<label for="fpsGame">Jogo</label><input id="fpsGame" maxlength="60" placeholder="Ex.: Minecraft">
+<label for="fpsValue">FPS medido</label><input id="fpsValue" type="number" min="0" max="1000" placeholder="Ex.: 120">
+<button onclick="recordFPS()">REGISTRAR MEDIÇÃO</button>
+<div class="result" id="fpsResult">Nenhuma medição nesta sessão.</div>
+</article>
+
+<article class="card">
+<div class="icon">🧑‍🤝‍🧑</div>
+<h3>Sorteador de equipes</h3>
+<p>Separe amigos em equipes para jogar juntos.</p>
+<label for="players">Nomes dos jogadores (um por linha)</label>
+<textarea id="players" placeholder="Alex&#10;Rafa&#10;Gui&#10;Léo"></textarea>
+<label for="teamCount">Quantidade de equipes</label>
+<select id="teamCount">
+<option value="2">2 equipes</option>
+<option value="3">3 equipes</option>
+<option value="4">4 equipes</option>
+<option value="5">5 equipes</option>
+</select>
+<button onclick="makeTeams()">DIVIDIR JOGADORES</button>
+<div class="result" id="teamResult">As equipes aparecerão aqui.</div>
+</article>
+
+<article class="card">
+<div class="icon">🔐</div>
+<h3>Gerador de senhas</h3>
+<p>Crie uma senha aleatória para suas contas.</p>
+<label for="passLength">Tamanho (8 a 40)</label>
+<input id="passLength" type="number" min="8" max="40" value="18">
+<button onclick="makePassword()">GERAR SENHA</button>
+<div class="result" id="passwordResult">Sua senha aparecerá aqui.</div>
+<button class="secondary" onclick="copyText('passwordResult')">COPIAR</button>
+<p class="muted">Nunca compartilhe sua senha. A senha é gerada localmente no navegador.</p>
+</article>
+
+<article class="card">
+<div class="icon">⏱️</div>
+<h3>Temporizador de sessão</h3>
+<p>Organize uma sessão de jogo ou lembre-se de fazer uma pausa.</p>
+<label for="timerMinutes">Duração em minutos</label>
+<input id="timerMinutes" type="number" min="1" max="600" value="45">
+<div class="result big" id="timerDisplay">45:00</div>
+<button onclick="startTimer()">INICIAR</button>
+<button class="secondary" onclick="pauseTimer()">PAUSAR</button>
+<button class="secondary" onclick="resetTimer()">REINICIAR</button>
+<p id="timerMessage" class="muted">Pronto para começar.</p>
+</article>
+
+<article class="card">
+<div class="icon">📐</div>
+<h3>Conversor de unidades</h3>
+<p>Converta comprimento, peso e temperatura.</p>
+<label for="unitType">Tipo</label>
+<select id="unitType" onchange="updateUnits()">
+<option value="length">Comprimento</option>
+<option value="weight">Peso</option>
+<option value="temp">Temperatura</option>
+</select>
+<label for="unitValue">Valor</label>
+<input id="unitValue" type="number" step="any" placeholder="Digite um valor" oninput="convertUnits()">
+<div class="row">
+<div><label for="unitFrom">De</label><select id="unitFrom" onchange="convertUnits()"></select></div>
+<div><label for="unitTo">Para</label><select id="unitTo" onchange="convertUnits()"></select></div>
+</div>
+<div class="result" id="unitResult">Resultado aparecerá aqui.</div>
+</article>
+
+</div>
+</section>
+
+<section id="biblioteca">
+<h2 class="section-title">📚 Minha biblioteca gamer</h2>
+<p class="section-desc">Monte sua lista de jogos e acompanhe o que quer jogar. Os dados ficam salvos neste navegador.</p>
+<div class="card">
+  <div class="row mobile-stack">
+    <div><label for="newGame">Nome do jogo</label><input id="newGame" maxlength="80" placeholder="Ex.: Roblox"></div>
+    <div><label for="newGameStatus">Status</label>
+      <select id="newGameStatus">
+        <option value="Quero jogar">Quero jogar</option>
+        <option value="Jogando">Jogando</option>
+        <option value="Zerado">Zerado</option>
+      </select>
+    </div>
+  </div>
+  <button onclick="addGame()">+ ADICIONAR JOGO</button>
+  <div class="result" id="libraryStats">0 jogos na biblioteca.</div>
+  <div class="game-list" id="libraryList"></div>
+  <p class="muted">Use esta lista para organizar seus jogos. Ela não se conecta automaticamente às suas contas de jogos.</p>
+</div>
+</section>
+
+<section id="missoes">
+<h2 class="section-title">🏆 Missões diárias</h2>
+<p class="section-desc">Complete atividades de diversão e ganhe XP dentro do portal.</p>
+<div class="grid" id="missionsList"></div>
+<div class="card">
+<h3>Conquistas</h3>
+<div class="badges" id="allBadges"></div>
+<p class="muted">As missões mudam de acordo com a data local do dispositivo. Você pode ganhar XP uma vez por missão por dia.</p>
+</div>
+</section>
+
+<section id="quiz">
+<h2 class="section-title">🧠 Quiz gamer</h2>
+<div class="card">
+<div class="row">
+<div class="big" id="quizScore">0 pontos</div>
+<div style="text-align:right"><span class="badge" id="quizProgress">Pergunta 1</span></div>
+</div>
+<div class="progress"><span id="quizBar"></span></div>
+<h3 id="question">Carregando pergunta...</h3>
+<div id="quizOptions"></div>
+<div class="result" id="quizFeedback">Escolha uma resposta.</div>
+<button onclick="nextQuestion()">PRÓXIMA PERGUNTA →</button>
+<button class="secondary" onclick="restartQuiz()">RECOMEÇAR</button>
+</div>
+</section>
+
+<div class="ad">
+  Espaço opcional para outro anúncio.
+  Não clique nos próprios anúncios nem incentive cliques artificiais.
+</div>
+
+<section id="sobre">
+<h2 class="section-title">Sobre a GAMEZONE</h2>
+<div class="card">
+<p>GAMEZONE é um projeto independente de ferramentas e entretenimento para jogadores. O site não é afiliado à Roblox, Mojang, Epic Games ou outras empresas de jogos.</p>
+<p class="muted">Algumas funções são apenas utilitários locais e não consultam servidores, estatísticas oficiais, contas ou APIs de jogos.</p>
+</div>
+</section>
+
+<section id="termos">
+<h2 class="section-title">📜 Termos de uso</h2>
+<div class="card">
+<p><strong>Última atualização: outubro de 2026</strong></p>
+<p>Ao utilizar a GAMEZONE, você concorda com os seguintes termos:</p>
+<ul>
+<li>O site oferece ferramentas gratuitas de entretenimento e organização, sem garantia de disponibilidade contínua ou de resultados específicos.</li>
+<li>Você é responsável por verificar as informações calculadas e por utilizar cada ferramenta de maneira adequada.</li>
+<li>Os nicks gerados podem já existir ou não ser aceitos em determinadas plataformas.</li>
+<li>O site não concede itens, Robux, dinheiro, contas, prêmios ou vantagens oficiais em jogos.</li>
+<li>Não utilize o portal para atividades ilegais, fraudes, spam ou violação dos direitos de terceiros.</li>
+<li>Não tente manipular anúncios, gerar impressões artificiais ou clicar nos próprios anúncios.</li>
+<li>Links e anúncios de terceiros, quando existentes, podem estar sujeitos a termos e políticas próprios.</li>
+<li>O projeto pode ser atualizado para corrigir erros, adicionar ferramentas ou modificar recursos.</li>
+</ul>
+<p>Estes termos devem ser revisados conforme a legislação aplicável e a forma como o site for efetivamente operado. Eles não substituem orientação jurídica.</p>
+</div>
+</section>
+
+<section id="privacidade">
+<h2 class="section-title">🔒 Política de privacidade</h2>
+<div class="card">
+<p><strong>Última atualização: outubro de 2026</strong></p>
+<h3>1. Dados usados pelas ferramentas</h3>
+<p>O código desta versão realiza os cálculos, sorteios, quizzes e geração de senhas no navegador. O nick, a biblioteca de jogos, o XP e as preferências podem ser armazenados no armazenamento local do navegador (localStorage) para continuar disponíveis nesse mesmo navegador.</p>
+<h3>2. Dados pessoais</h3>
+<p>Esta versão não possui formulário de cadastro, conta de usuário ou servidor próprio para receber as informações inseridas nas ferramentas. Isso não significa que o provedor de hospedagem ou os serviços externos utilizados no futuro não possam tratar dados técnicos.</p>
+<h3>3. Armazenamento e exclusão</h3>
+<p>Os dados locais podem ser apagados pelo botão de redefinição abaixo ou pelas configurações do navegador. Apagar os dados locais pode remover o perfil, o progresso e a biblioteca.</p>
+<button class="secondary" onclick="clearLocalData()">APAGAR DADOS LOCAIS</button>
+<h3>4. Publicidade e cookies</h3>
+<p>Os espaços de anúncio deste arquivo são marcadores visuais, não anúncios ativos. Se o Google AdSense ou outro fornecedor de publicidade for integrado, esse serviço poderá usar cookies, identificadores ou tecnologias semelhantes, conforme sua configuração e políticas. A política deverá ser atualizada com os detalhes reais da integração.</p>
+<p>Antes de publicar anúncios, configure os avisos e mecanismos de consentimento exigidos para os visitantes e regiões aplicáveis. Um simples botão de aceite não substitui automaticamente todas as obrigações legais ou as ferramentas de consentimento exigidas pelo fornecedor.</p>
+<h3>5. Crianças e adolescentes</h3>
+<p>Se o site for direcionado a crianças ou puder ser utilizado por elas, avalie as regras aplicáveis de privacidade, publicidade e proteção de menores antes de ativar anúncios ou coletar dados.</p>
+<h3>6. Alterações e contato</h3>
+<p>Esta política deve ser atualizada sempre que o funcionamento do site mudar. Antes da publicação, substitua o texto abaixo por um contato real do responsável pelo projeto.</p>
+<p><strong>Contato do responsável:</strong> adicione aqui um e-mail válido antes de publicar o site.</p>
+</div>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <strong>GAMEZONE ⚡</strong><br>
+  Ferramentas para jogadores, sem promessas falsas de prêmios ou dinheiro.
+  <p>
+    <a href="#sobre">Sobre</a>
+    <a href="#termos">Termos de uso</a>
+    <a href="#privacidade">Política de privacidade</a>
+  </p>
+  <p>© <span id="year"></span> GAMEZONE. Projeto independente.</p>
+</footer>
+
+<div id="notice" role="status" aria-live="polite"></div>
+
+<!-- Aceite dos termos para uso das ferramentas. Políticas acessíveis antes do aceite. -->
+<div class="modal-backdrop" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <h2 id="modalTitle">Bem-vindo à GAMEZONE</h2>
+    <p>Antes de usar as ferramentas, leia os termos de uso e a política de privacidade. O perfil e o progresso são armazenados localmente neste navegador.</p>
+    <p><a href="#termos" onclick="closeModalForPolicy()">Ler os termos de uso</a></p>
+    <p><a href="#privacidade" onclick="closeModalForPolicy()">Ler a política de privacidade</a></p>
+    <label class="checkline">
+      <input type="checkbox" id="acceptTerms">
+      <span>Li e aceito os termos de uso e declaro que li a política de privacidade.</span>
+    </label>
+    <div class="modal-actions">
+      <button id="acceptButton" onclick="acceptTerms()">ACEITAR E CONTINUAR</button>
+      <button class="secondary" onclick="declineTerms()">SAIR</button>
+    </div>
+    <p class="muted">Este aceite é registrado apenas neste navegador. Ele não constitui uma assinatura eletrônica formal nem comprova a identidade do visitante.</p>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+const $=id=>document.getElementById(id);
+const STORAGE_KEY="gamezone_data_v1";
+const TERMS_VERSION="1";
+let data={
+  name:"Player",genre:"Todos os gêneros",xp:0,
+  games:[],doneMissions:[],achievements:[]
+};
+
+function safeLoad(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null");
+    if(saved&&typeof saved==="object"){
+      data={...data,...saved};
+      if(!Array.isArray(data.games))data.games=[];
+      if(!Array.isArray(data.doneMissions))data.doneMissions=[];
+      if(!Array.isArray(data.achievements))data.achievements=[];
+      if(!Number.isFinite(data.xp)||data.xp<0)data.xp=0;
+    }
+  }catch(e){}
+}
+function persist(){
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));}
+  catch(e){toast("Não foi possível salvar. Verifique o armazenamento do navegador.");}
+}
+let noticeTimeout;
+function toast(msg){
+  $("notice").textContent=msg;
+  $("notice").style.display="block";
+  clearTimeout(noticeTimeout);
+  noticeTimeout=setTimeout(()=>{$("notice").style.display="none";},2600);
+}
+
+function checkTerms(){
+  let accepted=false;
+  try{accepted=localStorage.getItem("gamezone_terms_version")===TERMS_VERSION;}
+  catch(e){}
+  if(!accepted)$("termsModal").classList.add("show");
+}
+function acceptTerms(){
+  if(!$("acceptTerms").checked){
+    toast("Marque a caixa para confirmar o aceite.");
+    return;
+  }
+  try{localStorage.setItem("gamezone_terms_version",TERMS_VERSION);}
+  catch(e){toast("O navegador não conseguiu salvar o aceite.");return;}
+  $("termsModal").classList.remove("show");
+  toast("Bem-vindo à GAMEZONE!");
+}
+function declineTerms(){
+  $("termsModal").classList.remove("show");
+  document.querySelector("main").innerHTML=
+  '<div class="wrap"><div class="card"><h2>Termos não aceitos</h2><p>As ferramentas não serão carregadas enquanto você não aceitar os termos. Você ainda pode ler as políticas no rodapé da página.</p><button onclick="location.reload()">VOLTAR</button></div></div>';
+}
+function closeModalForPolicy(){
+  $("termsModal").classList.remove("show");
+  setTimeout(()=>{
+    const target=location.hash;
+    if(target)document.querySelector(target)?.scrollIntoView();
+  },0);
+}
+
+/* Perfil e XP */
+function level(){return Math.floor(data.xp/100)+1;}
+function updateProfile(){
+  $("playerName").value=data.name||"Player";
+  $("favoriteGenre").value=data.genre||"Todos os gêneros";
+  $("profileDisplay").textContent=data.name||"Player";
+  $("levelDisplay").textContent=`Nível ${level()} • ${data.xp} XP`;
+  const progress=data.xp%100;
+  $("xpBar").style.width=progress+"%";
+  $("xpInfo").textContent=`${100-progress} XP para o próximo nível.`;
+  const badges=[
+    {id:"firstxp",label:"⚡ Primeiro XP",ok:data.xp>=10},
+    {id:"collector",label:"📚 Colecionador",ok:data.games.length>=5},
+    {id:"quizzer",label:"🧠 Mente gamer",ok:data.achievements.includes("quiz")},
+    {id:"missions",label:"🏆 Primeira missão",ok:data.achievements.includes("mission")}
+  ];
+  $("badgeDisplay").innerHTML="";
+  $("allBadges").innerHTML="";
+  badges.forEach(b=>{
+    const s=document.createElement("span");
+    s.className="badge"+(b.ok?" unlocked":"");
+    s.textContent=b.label+(b.ok?" ✓":" 🔒");
+    $("badgeDisplay").appendChild(s);
+    $("allBadges").appendChild(s.cloneNode(true));
+  });
+}
+function saveProfile(){
+  data.name=$("playerName").value.trim().slice(0,24)||"Player";
+  data.genre=$("favoriteGenre").value;
+  persist();updateProfile();toast("Perfil salvo!");
+}
+function addXP(n){
+  const before=level();
+  data.xp+=n;
+  persist();updateProfile();
+  toast(level()>before?`Subiu para o nível ${level()}! +${n} XP`:`+${n} XP!`);
+}
+
+/* Gerador de nick */
+function generateNick(){
+  const sets={
+    pro:["Clutch","Vortex","Blaze","Ghost","Storm","Nova","Pixel","Frost","Rift","Turbo"],
+    dark:["Void","Night","Phantom","Abyss","Raven","Crypt","Shadow","Dread","Echo"],
+    fun:["Batata","Pombo","Pudim","Pato","Lagado","Tio","Zoeira","Xora","Pinguim"],
+    space:["Cosmo","Astro","Nebula","Orbit","Lunar","Quasar","Solar","Comet"],
+    simple:["Neo","Kai","Zen","Max","Lynx","Ari","Nox","Kiro"]
+  };
+  const suffix=["BR","GG","X","EX","YT","777","Zero","FPS","Playz"];
+  const list=sets[$("nickStyle").value];
+  const name=list[Math.floor(Math.random()*list.length)];
+  const end=suffix[Math.floor(Math.random()*suffix.length)];
+  $("nickResult").textContent=Math.random()<.5?name+end:end+name;
+  addXP(2);
+}
+
+/* Sensibilidade */
+function convertSens(){
+  const d1=Number($("dpiA").value),s=Number($("sensA").value),d2=Number($("dpiB").value);
+  if(d1<=0||d2<=0||s<=0||!Number.isFinite(d1*s/d2)){
+    $("sensResult").textContent="Preencha todos os valores com números maiores que zero.";return;
+  }
+  $("sensResult").textContent="Sensibilidade equivalente aproximada: "+(s*d1/d2).toLocaleString("pt-BR",{maximumFractionDigits:5});
+}
+
+/* Sorteador de jogos */
+const gamePools={
+  any:["Minecraft","Roblox","Rocket League","Terraria","Brawlhalla","Fall Guys","Among Us","Stardew Valley","Portal 2"],
+  roblox:["Obby de dificuldade crescente","Experiência de terror","Tycoon","FPS competitivo","Tower Defense","Jogo de sobrevivência","Jogo de exploração"],
+  horror:["Phasmophobia","Sons of the Forest","Resident Evil","Amnesia","Little Nightmares"],
+  building:["Minecraft","Terraria","LEGO Fortnite","Stardew Valley","Core Keeper"],
+  competitive:["Rocket League","Brawlhalla","Valorant","Fortnite","Overwatch 2"]
+};
+function pickGame(){
+  const list=gamePools[$("gameGenre").value];
+  $("gameResult").textContent="🎮 Sua missão: "+list[Math.floor(Math.random()*list.length)];
+  addXP(2);
+}
+
+/* Calculadora de desconto */
+function calcDiscount(){
+  const raw=$("price").value,pRaw=$("discount").value;
+  const v=Number(raw),p=Number(pRaw);
+  if(raw===""||pRaw===""||!Number.isFinite(v)||v<0||p<0||p>100){
+    $("discountResult").textContent="Informe um preço válido e um desconto entre 0% e 100%.";return;
+  }
+  const final=v*(1-p/100);
+  $("discountResult").textContent=`Economia: ${(v-final).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})} · Preço final: ${final.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}`;
+}
+
+/* FPS */
+function recordFPS(){
+  const game=$("fpsGame").value.trim(),raw=$("fpsValue").value,n=Number(raw);
+  if(!game||raw===""||!Number.isFinite(n)||n<0||n>1000){
+    $("fpsResult").textContent="Informe o nome do jogo e um FPS entre 0 e 1000.";return;
+  }
+  $("fpsResult").textContent=`${game}: ${n} FPS registrados nesta sessão.`;
+  addXP(2);
+}
+
+/* Equipes */
+function makeTeams(){
+  const names=$("players").value.split(/\n/).map(x=>x.trim()).filter(Boolean);
+  const count=Number($("teamCount").value);
+  if(names.length<count||new Set(names).size!==names.length){
+    $("teamResult").textContent="Digite pelo menos um nome por equipe e evite nomes duplicados.";return;
+  }
+  for(let i=names.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [names[i],names[j]]=[names[j],names[i]];
+  }
+  const teams=Array.from({length:count},()=>[]);
+  names.forEach((name,i)=>teams[i%count].push(name));
+  $("teamResult").innerHTML="";
+  teams.forEach((team,i)=>{
+    const block=document.createElement("div");
+    block.style.marginBottom="12px";
+    const title=document.createElement("strong");
+    title.textContent=`Equipe ${i+1}`;
+    const list=document.createElement("div");
+    list.textContent=team.join(", ");
+    block.append(title,list);
+    $("teamResult").appendChild(block);
+  });
+  addXP(3);
+}
+
+/* Senhas */
+function makePassword(){
+  const raw=$("passLength").value;
+  if(raw===""){toast("Informe o tamanho da senha.");return;}
+  const len=Number(raw);
+  if(!Number.isInteger(len)||len<8||len>40){
+    toast("Escolha um tamanho entre 8 e 40.");return;
+  }
+  if(!window.crypto||!crypto.getRandomValues){
+    $("passwordResult").textContent="Gerador seguro indisponível neste navegador.";return;
+  }
+  const chars="abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%&*_-+=";
+  const arr=new Uint32Array(len);
+  crypto.getRandomValues(arr);
+  $("passwordResult").textContent=Array.from(arr,n=>chars[n%chars.length]).join("");
+}
+async function copyText(id){
+  const el=$(id),t=el.innerText.trim();
+  if(!t||t.includes("aparecerá aqui")){toast("Gere um resultado primeiro.");return;}
+  try{
+    await navigator.clipboard.writeText(t);toast("Copiado!");
+  }catch(e){toast("Cópia automática indisponível. Selecione o texto e copie.");}
+}
+
+/* Temporizador */
+let timer=null,remaining=2700;
+function showTimer(){
+  $("timerDisplay").textContent=
+  `${String(Math.floor(remaining/60)).padStart(2,"0")}:${String(remaining%60).padStart(2,"0")}`;
+}
+function startTimer(){
+  if(timer)clearInterval(timer);
+  if(remaining<=0)remaining=Math.max(0,Number($("timerMinutes").value||0)*60);
+  if(remaining<=0){$("timerMessage").textContent="Defina um tempo maior que zero.";return;}
+  $("timerMessage").textContent="Temporizador em andamento.";
+  timer=setInterval(()=>{
+    remaining--;showTimer();
+    if(remaining<=0){
+      clearInterval(timer);timer=null;
+      $("timerMessage").textContent="Tempo encerrado!";
+      toast("Seu temporizador terminou.");
+    }
+  },1000);
+}
+function pauseTimer(){
+  if(timer)clearInterval(timer);
+  timer=null;$("timerMessage").textContent="Temporizador pausado.";
+}
+function resetTimer(){
+  pauseTimer();
+  remaining=Math.max(0,Number($("timerMinutes").value||0)*60);
+  showTimer();$("timerMessage").textContent="Temporizador reiniciado.";
+}
+
+/* Conversor */
+const unitDefs={
+  length:{m:1,km:1000,cm:.01,mm:.001,ft:.3048,mi:1609.344},
+  weight:{kg:1,g:.001,mg:.000001,lb:.45359237,oz:.028349523125}
+};
+function updateUnits(){
+  const type=$("unitType").value;
+  const list=type==="temp"?["°C","°F","K"]:Object.keys(unitDefs[type]);
+  $("unitFrom").innerHTML="";$("unitTo").innerHTML="";
+  list.forEach(u=>{$("unitFrom").add(new Option(u,u));$("unitTo").add(new Option(u,u));});
+  if(list.length>1)$("unitTo").selectedIndex=1;
+  convertUnits();
+}
+function convertUnits(){
+  if($("unitValue").value===""){$("unitResult").textContent="Digite um valor.";return;}
+  const v=Number($("unitValue").value),type=$("unitType").value;
+  const a=$("unitFrom").value,b=$("unitTo").value;
+  let r;
+  if(type==="temp"){
+    const c=a==="°F"?(v-32)*5/9:a==="K"?v-273.15:v;
+    r=b==="°F"?c*9/5+32:b==="K"?c+273.15:c;
+  }else r=v*unitDefs[type][a]/unitDefs[type][b];
+  $("unitResult").textContent=`${v} ${a} = ${Number(r.toPrecision(10)).toLocaleString("pt-BR",{maximumFractionDigits:8})} ${b}`;
+}
+
+/* Biblioteca */
+function renderLibrary(){
+  const list=$("libraryList");
+  list.innerHTML="";
+  const total=data.games.length;
+  const playing=data.games.filter(g=>g.status==="Jogando").length;
+  const finished=data.games.filter(g=>g.status==="Zerado").length;
+  $("libraryStats").textContent=`${total} jogos • ${playing} jogando • ${finished} zerados`;
+  if(!total){
+    const p=document.createElement("p");p.className="empty";
+    p.textContent="Sua biblioteca está vazia. Adicione um jogo acima.";
+    list.appendChild(p);
+  }
+  data.games.forEach((game,index)=>{
+    const item=document.createElement("div");item.className="game-item";
+    const info=document.createElement("div");
+    const name=document.createElement("strong");name.textContent=game.name;
+    const status=document.createElement("small");status.textContent=game.status;
+    info.append(name,status);
+    const actions=document.createElement("div");
+    const next=document.createElement("button");next.className="secondary";next.textContent="Status";
+    next.onclick=()=>cycleGame(index);
+    const del=document.createElement("button");del.className="danger";del.textContent="Excluir";
+    del.onclick=()=>deleteGame(index);
+    actions.append(next,del);item.append(info,actions);list.appendChild(item);
+  });
+  updateProfile();
+}
+function addGame(){
+  const name=$("newGame").value.trim().slice(0,80);
+  if(!name){toast("Digite o nome de um jogo.");return;}
+  if(data.games.some(g=>g.name.toLowerCase()===name.toLowerCase())){
+    toast("Esse jogo já está na biblioteca.");return;
+  }
+  data.games.push({name,status:$("newGameStatus").value});
+  $("newGame").value="";
+  persist();renderLibrary();addXP(3);
+}
+function cycleGame(i){
+  const states=["Quero jogar","Jogando","Zerado"];
+  const g=data.games[i];
+  g.status=states[(states.indexOf(g.status)+1)%states.length];
+  persist();renderLibrary();toast("Status atualizado!");
+}
+function deleteGame(i){
+  if(!confirm("Excluir este jogo da biblioteca?"))return;
+  data.games.splice(i,1);persist();renderLibrary();
+}
+
+/* Missões diárias */
+const missionDefs=[
+  {id:"nick",title:"Identidade nova",desc:"Gere um nick diferente.",xp:10},
+  {id:"game",title:"Nova aventura",desc:"Sorteie um jogo para experimentar.",xp:10},
+  {id:"library",title:"Organizador",desc:"Adicione um jogo à biblioteca.",xp:15},
+  {id:"quiz",title:"Mente gamer",desc:"Responda uma pergunta do quiz.",xp:10},
+  {id:"fps",title:"Analista",desc:"Registre uma medição de FPS.",xp:10}
+];
+function todayKey(){return new Date().toLocaleDateString("en-CA");}
+function missionKey(id){return todayKey()+":"+id;}
+function missionDone(id){return data.doneMissions.includes(missionKey(id));}
+function completeMission(id){
+  if(missionDone(id)){toast("Você já concluiu esta missão hoje.");return;}
+  data.doneMissions.push(missionKey(id));
+  data.achievements.push("mission");
+  const m=missionDefs.find(x=>x.id===id);
+  if(m)data.xp+=m.xp;
+  persist();renderMissions();updateProfile();
+  toast(`Missão concluída! +${m?m.xp:0} XP`);
+}
+function renderMissions(){
+  const root=$("missionsList");root.innerHTML="";
+  missionDefs.forEach(m=>{
+    const done=missionDone(m.id);
+    const card=document.createElement("article");card.className="card";
+    const title=document.createElement("h3");title.textContent=(done?"✅ ":"🎯 ")+m.title;
+    const desc=document.createElement("p");desc.textContent=m.desc;
+    const reward=document.createElement("div");reward.className="badge";reward.textContent=`+${m.xp} XP`;
+    const btn=document.createElement("button");
+    btn.className=done?"secondary":"";
+    btn.textContent=done?"CONCLUÍDA":"MARCAR COMO FEITA";
+    btn.disabled=done;
+    btn.onclick=()=>completeMission(m.id);
+    card.append(title,desc,reward,document.createElement("br"),btn);
+    root.appendChild(card);
+  });
+}
+
+/* Quiz */
+const questions=[
+  {q:"Qual empresa criou Minecraft?",o:["Valve","Mojang","Epic Games","Nintendo"],a:1},
+  {q:"Qual destes jogos tem Creepers?",o:["Minecraft","Among Us","Rocket League","Portal"],a:0},
+  {q:"O que significa FPS no contexto de desempenho?",o:["Frames por segundo","Fases por servidor","Fogo por sequência","Função de player"],a:0},
+  {q:"No Roblox, o que é um obby?",o:["Um percurso de obstáculos","Uma moeda oficial","Um tipo de console","Uma skin"],a:0},
+  {q:"Qual destes é um jogo de futebol com carros?",o:["Trackmania","Rocket League","The Sims","Terraria"],a:1},
+  {q:"Qual é um console da Nintendo?",o:["Xbox Series X","PlayStation 5","Nintendo Switch","Steam Deck"],a:2},
+  {q:"Qual jogo é conhecido por blocos e construção?",o:["Minecraft","Valorant","Overwatch 2","Apex Legends"],a:0},
+  {q:"Qual destes é um gênero de jogo?",o:["HDMI","RPG","USB-C","Bluetooth"],a:1}
+];
+let qIndex=0,quizPoints=0,answered=false,quizCompleted=[];
+function renderQuestion(){
+  const q=questions[qIndex];
+  $("question").textContent=`Pergunta ${qIndex+1}/${questions.length}: ${q.q}`;
+  $("quizProgress").textContent=`Pergunta ${qIndex+1} de ${questions.length}`;
+  $("quizBar").style.width=(qIndex/questions.length*100)+"%";
+  $("quizOptions").innerHTML="";
+  q.o.forEach((opt,i)=>{
+    const b=document.createElement("button");
+    b.className="secondary";b.style.display="block";b.style.width="100%";b.style.textAlign="left";
+    b.textContent=opt;b.onclick=()=>answerQuestion(i);
+    $("quizOptions").appendChild(b);
+  });
+  $("quizFeedback").textContent="Escolha uma resposta.";
+  answered=false;
+}
+function answerQuestion(i){
+  if(answered)return;answered=true;
+  const q=questions[qIndex];
+  if(i===q.a){
+    quizPoints++;$("quizFeedback").textContent="Correto! Boa!";
+  }else $("quizFeedback").textContent="Resposta correta: "+q.o[q.a]+".";
+  $("quizScore").textContent=quizPoints+" ponto(s)";
+  if(!quizCompleted.includes(qIndex)){
+    quizCompleted.push(qIndex);
+    data.achievements.push("quiz");
+    data.xp+=i===q.a?5:1;
+    persist();updateProfile();
+  }
+  $("quizBar").style.width=((qIndex+1)/questions.length*100)+"%";
+}
+function nextQuestion(){
+  if(!answered){toast("Responda à pergunta primeiro.");return;}
+  if(qIndex===questions.length-1){
+    $("quizFeedback").textContent=`Quiz concluído! Você fez ${quizPoints} de ${questions.length} pontos.`;
+    toast("Você chegou ao fim do quiz!");
+    return;
+  }
+  qIndex++;renderQuestion();
+}
+function restartQuiz(){
+  qIndex=0;quizPoints=0;quizCompleted=[];
+  $("quizScore").textContent="0 pontos";renderQuestion();
+}
+
+/* Apagar os dados */
+function clearLocalData(){
+  if(!confirm("Apagar perfil, XP, biblioteca e progresso salvos neste navegador?"))return;
+  try{
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem("gamezone_terms_version");
+  }catch(e){}
+  location.reload();
+}
+
+/* Eventos para missões */
+$("nickStyle").addEventListener("change",()=>{});
+$("newGame").addEventListener("keydown",e=>{if(e.key==="Enter")addGame();});
+
+safeLoad();
+updateProfile();
+renderLibrary();
+renderMissions();
+updateUnits();
+showTimer();
+renderQuestion();
+checkTerms();
+
+/* As missões são concluídas por ações reais das ferramentas. */
+const originalGenerateNick=generateNick;
+generateNick=function(){originalGenerateNick();completeMission("nick");};
+const originalPickGame=pickGame;
+pickGame=function(){originalPickGame();completeMission("game");};
+const originalAddGame=addGame;
+addGame=function(){
+  const before=data.games.length;
+  originalAddGame();
+  if(data.games.length>before)completeMission("library");
+};
+const originalRecordFPS=recordFPS;
+recordFPS=function(){
+  const before=$("fpsResult").textContent;
+  originalRecordFPS();
+  if($("fpsResult").textContent!==before)completeMission("fps");
+};
+const originalAnswerQuestion=answerQuestion;
+answerQuestion=function(i){
+  const was=answered;
+  originalAnswerQuestion(i);
+  if(!was&&answered)completeMission("quiz");
+};
+</script>
+</body>
+</html>
